@@ -42,7 +42,7 @@ public class MergeSort {
 
     public static void main(String[] args) {
         MergeSort obj = new MergeSort();
-        int[] arr = new int[]{9, 8, 7, 6, 5, 4, 3, 2, 1};
+        int[] arr = new int[]{9, 8,9, 8, 7, 6, 5, 4, 3, 2,9, 8, 7, 6, 5, 4, 3, 2, 1};
         Util.printArr(arr);
         int[] result = obj.mergeSort(arr);
         Util.printArr(result);
