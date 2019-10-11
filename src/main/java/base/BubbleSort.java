@@ -1,5 +1,7 @@
 package base;
 
+import util.Util;
+
 public class BubbleSort {
     public void bubbleSort(int[] arr) {
         for (int i = 0; i < arr.length - 1; i++) {
@@ -20,7 +22,9 @@ public class BubbleSort {
     public static void main(String[] args) {
         BubbleSort obj = new BubbleSort();
         int[] arr = new int[]{6, 5, 4};
+        Util.printArr(arr);
         obj.bubbleSort(arr);
+        Util.printArr(arr);
 
         System.out.println();
     }
