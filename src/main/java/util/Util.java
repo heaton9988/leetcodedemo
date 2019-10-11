@@ -6,7 +6,7 @@ public class Util {
 		for (int a : arr) {
 			sb.append(a).append(", ");
 		}
-		if (sb.length() > 0) {
+		if (sb.length() > 1) {
 			sb.setLength(sb.length() - 2);
 		}
 		sb.append("]");
