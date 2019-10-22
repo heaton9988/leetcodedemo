@@ -13,8 +13,26 @@ public class Util {
         System.out.println(sb);
     }
 
+    public static void printArr(boolean[] arr) {
+        StringBuilder sb = new StringBuilder("[");
+        for (boolean a : arr) {
+            sb.append(a).append(",\t");
+        }
+        if (sb.length() > 1) {
+            sb.setLength(sb.length() - 2);
+        }
+        sb.append("]");
+        System.out.println(sb);
+    }
+
     public static void printArr(int[][] input) {
         for (int[] i : input) {
+            Util.printArr(i);
+        }
+    }
+
+    public static void printArr(boolean[][] input) {
+        for (boolean[] i : input) {
             Util.printArr(i);
         }
     }

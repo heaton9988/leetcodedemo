@@ -82,7 +82,7 @@ public class TheMaze490_fail {
         String str2dgrid = "00100,00000,00010,11011,00000";
         str2dgrid = "00000,11001,00000,01001,01000";
         str2dgrid = "00100";
-        str2dgrid = "00100,00000,00010,11011,00000";
+//        str2dgrid = "00100,00000,00010,11011,00000";
         pStart = new int[]{0, 4};
         pTarget = new int[]{1, 2};
         int[][] input = Util.str2matrix(str2dgrid);
