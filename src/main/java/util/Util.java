@@ -65,6 +65,17 @@ public class Util {
         return dummy.next;
     }
 
+    public static ListNode arr2listNode(int[] arr) {
+        ListNode dummy = new ListNode(-1);
+        ListNode curr = dummy;
+        for (int i = 0; i < arr.length; i++) {
+            ListNode n = new ListNode(arr[i]);
+            curr.next = n;
+            curr = curr.next;
+        }
+        return dummy.next;
+    }
+
     public static int[][] str2matrix(String str2dgrid) {
         String[] ss = str2dgrid.split(",");
         int[][] grid = new int[ss.length][];
@@ -77,5 +88,16 @@ public class Util {
             grid[i] = temp;
         }
         return grid;
+    }
+
+    public static void printListNode(Object o) {
+        ListNode node = (ListNode) o;
+        StringBuilder sb = new StringBuilder();
+        while (node != null) {
+            sb.append(node.val).append(",");
+            node = node.next;
+        }
+        if (sb.length() > 0) sb.setLength(sb.length() - 1);
+        System.out.println("[" + sb.toString() + "]");
     }
 }
