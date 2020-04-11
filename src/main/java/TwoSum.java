@@ -6,8 +6,7 @@ public class TwoSum {
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
             int num = nums[i];
-            int diff = target - num;
-            Integer diffValue = map.get(diff);
+            Integer diffValue = map.get(target - num);
             if (diffValue != null) {
                 return new int[]{i, diffValue};
             } else {

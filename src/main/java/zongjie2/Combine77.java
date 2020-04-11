@@ -4,25 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Combine77 {
-    public List<List<Integer>> subsets(int[] nums) {
+    public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> res = new ArrayList<>();
-        if (nums == null || nums.length == 0) return res;
-
-        helper(res, new ArrayList<>(), nums, 0);
+        helper(res, new ArrayList<>(), n, k, 1);
         return res;
     }
 
-    private void helper(List<List<Integer>> res, List<Integer> list, int[] nums, int index) {
-        res.add(new ArrayList<>(list));
-        for (int i = index; i < nums.length; i++) {
-            list.add(nums[i]);
-            helper(res, list, nums, i + 1);
+    private void helper(List<List<Integer>> res, List<Integer> list, int n, int k, int start) {
+        if (k == 0) {
+            res.add(new ArrayList<>(list));
+            return;
+        }
+
+        for (int i = start; i <= n; i++) {
+            list.add(i);
+            helper(res, list, n, k - 1, i + 1);
             list.remove(list.size() - 1);
         }
     }
 
     public static void main(String[] args) {
-        Object o = new Combine77().subsets(new int[]{1, 7, 11});
+        Object o = new Combine77().combine(4, 1);
         System.out.println(o);
     }
 }
