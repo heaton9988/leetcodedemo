@@ -4,7 +4,7 @@ public class MaxProfit122 {
         int n = prices.length;
         int res = 0;
         int left = prices[0];
-        for (int i = 0; i < n; i++) {
+        for (int i = 1; i < n; i++) {
             if (i + 1 < prices.length) {
                 if (prices[i + 1] < prices[i] && left < prices[i]) {
                     res += prices[i] - left;
