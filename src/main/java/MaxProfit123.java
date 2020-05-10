@@ -1,25 +1,21 @@
 public class MaxProfit123 {
     public int maxProfit(int[] prices) {
-        if (prices == null || prices.length < 2) return 0;
-        int n = prices.length;
-        int maxK = 2;
-        int[][][] dp = new int[n][maxK + 1][2];
-        for (int i = 0; i < n; i++) {
-            for (int j = maxK; j >= 1; j--) {
-                if (i > 0) {
-                    dp[i][j][0] = Math.max(dp[i - 1][j][0], dp[i - 1][j][1] + prices[i]);
-                    dp[i][j][1] = Math.max(dp[i - 1][j][1], dp[i - 1][j - 1][0] - prices[i]);
-                } else {
-                    dp[0][j][0] = 0;
-                    dp[0][j][1] = Integer.MIN_VALUE;
-                }
-            }
+        int T_i10 = 0, T_i11 = Integer.MIN_VALUE;
+        int T_i20 = 0, T_i21 = Integer.MIN_VALUE;
+
+        for (int i = 0; i < prices.length; i++) {
+            int price = prices[i];
+            T_i20 = Math.max(T_i20, T_i21 + price);
+            T_i21 = Math.max(T_i21, T_i10 - price);
+            T_i10 = Math.max(T_i10, T_i11 + price);
+            T_i11 = Math.max(T_i11, -price);
         }
-        return dp[n - 1][2][0];
+
+        return T_i20;
     }
 
     public static void main(String[] args) {
-        int[] prices = {3, 3, 5, 0, 0, 3, 1, 4};
+        int[] prices = {1, 2, 4, 2, 5, 7, 2, 4, 9, 0};
         MaxProfit123 obj = new MaxProfit123();
         long start = System.currentTimeMillis();
         System.out.println(obj.maxProfit(prices));
