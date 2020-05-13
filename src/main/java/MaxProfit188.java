@@ -2,28 +2,25 @@ import java.util.Arrays;
 
 public class MaxProfit188 {
     public int maxProfit(int k, int[] prices) {
-        if (k >= prices.length >>> 1) {
-            int T_ik0 = 0, T_ik1 = Integer.MIN_VALUE;
-
-            for (int price : prices) {
-                int T_ik0_old = T_ik0;
-                T_ik0 = Math.max(T_ik0, T_ik1 + price);
-                T_ik1 = Math.max(T_ik1, T_ik0_old - price);
+        if (k > prices.length / 2) {
+            int i0 = 0;
+            int i1 = Integer.MIN_VALUE;
+            for (int i = 0; i < prices.length; i++) {
+                i0 = Math.max(i0, i1 + prices[i]);
+                i1 = Math.max(i1, i0 - prices[i]);
             }
-            return T_ik0;
+            return i0;
         }
-
-        int[] T_ik0 = new int[k + 1];
-        int[] T_ik1 = new int[k + 1];
-        Arrays.fill(T_ik1, Integer.MIN_VALUE);
-
-        for (int price : prices) {
+        int[] i0 = new int[k + 1];
+        int[] i1 = new int[k + 1];
+        Arrays.fill(i1, Integer.MIN_VALUE);
+        for (int i = 0; i < prices.length; i++) {
             for (int j = k; j > 0; j--) {
-                T_ik0[j] = Math.max(T_ik0[j], T_ik1[j] + price);
-                T_ik1[j] = Math.max(T_ik1[j], T_ik0[j - 1] - price);
+                i0[j] = Math.max(i0[j], i1[j] + prices[i]);
+                i1[j] = Math.max(i1[j], i0[j - 1] - prices[i]);
             }
         }
-        return T_ik0[k];
+        return i0[k];
     }
 
     public static void main(String[] args) {
