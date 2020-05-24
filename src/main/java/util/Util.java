@@ -100,4 +100,10 @@ public class Util {
         if (sb.length() > 0) sb.setLength(sb.length() - 1);
         System.out.println("[" + sb.toString() + "]");
     }
+
+    public static void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
 }
