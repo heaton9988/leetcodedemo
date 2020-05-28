@@ -15,14 +15,14 @@ public class String358_rearrangeString {
             if (count[i] > 0) pq.add(i);
         }
         while (!pq.isEmpty()) {
-            int curr = pq.poll();
-            intervalList.add(curr);
-            count[curr]--;
-            res.append((char) ('a' + curr));
+            int top = pq.poll();
+            count[top]--;
+            intervalList.add(top);
+            res.append((char) ('a' + top));
             if (intervalList.size() >= k) {
-                int mem = intervalList.poll();
-                if (count[mem] > 0) {
-                    pq.offer(mem);
+                Integer prevK = intervalList.poll();
+                if (count[prevK] > 0) {
+                    pq.offer(prevK);
                 }
             }
         }
@@ -32,7 +32,7 @@ public class String358_rearrangeString {
     public static void main(String[] args) throws Exception {
         String358_rearrangeString obj = new String358_rearrangeString();
         long start = System.currentTimeMillis();
-        Object o = obj.rearrangeString("aabbcc", 3);
+        Object o = obj.rearrangeString("aabbcc", 4);
         System.out.println(o);
         System.out.println(System.currentTimeMillis() - start + " ms");
     }
