@@ -1,30 +1,29 @@
 import java.util.LinkedList;
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class String358_rearrangeString {
     public String rearrangeString(String s, int k) {
         int[] count = new int[26];
-        char c[] = s.toCharArray();
-        for (char ch : c) {
-            count[ch - 'a']++;
+        for (char c : s.toCharArray()) {
+            count[c - 'a']++;
         }
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> count[b] - count[a]);
-        for (int i = 0; i < 26; i++) {
-            if (count[i] > 0) {
-                pq.add(i);
-            }
-        }
+        PriorityQueue<Integer> pq = new PriorityQueue<>((o1, o2) -> count[o2] - count[o1]);
         StringBuilder res = new StringBuilder();
-        LinkedList<Integer> list = new LinkedList();
+        Queue<Integer> intervalList = new LinkedList<>();
+        for (int i = 0; i < count.length; i++) {
+            if (count[i] > 0) pq.add(i);
+        }
         while (!pq.isEmpty()) {
-            Integer top = pq.poll();
-            res.append((char) ('a' + top));
-            count[top]--;
-            if (count[top] > 0) {
-                list.addLast(top);
-            }
-            if (list.size() >= k) {
-                pq.offer(list.pollFirst());
+            int curr = pq.poll();
+            intervalList.add(curr);
+            count[curr]--;
+            res.append((char) ('a' + curr));
+            if (intervalList.size() >= k) {
+                int mem = intervalList.poll();
+                if (count[mem] > 0) {
+                    pq.offer(mem);
+                }
             }
         }
         return res.length() == s.length() ? res.toString() : "";
