@@ -5,7 +5,9 @@ public class String316_removeDuplicateLetters_2 {
         // pos will be the index of the smallest character we encounter before the iteration ends
         int[] cnt = new int[26];
         int pos = 0;
-        for (int i = 0; i < s.length(); i++) cnt[s.charAt(i) - 'a']++;
+        for (int i = 0; i < s.length(); i++) {
+            cnt[s.charAt(i) - 'a']++;
+        }
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) < s.charAt(pos)) pos = i;
             if (--cnt[s.charAt(i) - 'a'] == 0) break;
