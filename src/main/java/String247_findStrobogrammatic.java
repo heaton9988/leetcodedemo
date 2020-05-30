@@ -4,6 +4,7 @@ public class String247_findStrobogrammatic {
     HashMap<Character, Character> map = new HashMap<>();
     int n;
     int middle;
+    boolean even = false;
 
     public List<String> findStrobogrammatic(int n) {
         List<String> res = new ArrayList<>();
@@ -15,6 +16,7 @@ public class String247_findStrobogrammatic {
         }
         this.n = n;
         this.middle = (n + 1) / 2;
+        this.even = n % 2 == 0;
         map.put('0', '0');
         map.put('1', '1');
         map.put('6', '9');
@@ -23,31 +25,32 @@ public class String247_findStrobogrammatic {
 
         for (Map.Entry<Character, Character> entry : map.entrySet()) {
             if (entry.getKey().equals('0')) continue;
-            helper(entry.getValue().toString(), res);
+            char[] c = new char[n];
+            c[0] = entry.getValue();
+            helper(c, 1, res);
         }
         return res;
     }
 
-    private void helper(String curr, List<String> res) {
-        if (curr.length() == this.middle) {
-            res.add(fill(curr));
+    private void helper(char[] c, int length, List<String> res) {
+        if (length >= this.middle) {
+            res.add(fill(c, length));
             return;
         }
         for (Map.Entry<Character, Character> entry : map.entrySet()) {
-            if (n % 2 != 0 && curr.length() == this.middle - 1 && (entry.getKey().equals('6') || entry.getKey().equals('9')))
+            if (!even && length == this.middle - 1 && (entry.getKey().equals('6') || entry.getKey().equals('9'))) {
                 continue;
-            helper(curr + entry.getValue().toString(), res);
+            }
+            c[length] = entry.getValue();
+            helper(c, length + 1, res);
         }
     }
 
-    private String fill(String origin) {
-        char[] res = new char[n];
-        char[] o = origin.toCharArray();
-        for (int i = 0; i < o.length; i++) {
-            res[i] = o[i];
-            res[n - 1 - i] = map.get(o[i]);
+    private String fill(char[] c, int length) {
+        for (int i = 0; i < length; i++) {
+            c[n - 1 - i] = map.get(c[i]);
         }
-        return new String(res);
+        return new String(c);
     }
 
     public static void main(String[] args) throws Exception {
