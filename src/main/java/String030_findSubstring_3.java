@@ -20,19 +20,26 @@ public class String030_findSubstring_3 {
             int count = 0;
             while (right + wordLen <= s.length()) {
                 String subRight = s.substring(right, right + wordLen);
-                tempMap.put(subRight, tempMap.getOrDefault(subRight, 0) + 1);
                 right += wordLen;
-                count++;
+                if (!baseMap.containsKey(subRight)) {
+                    left = right;
+                    count = 0;
+                    tempMap.clear();
+                } else {
+                    tempMap.put(subRight, tempMap.getOrDefault(subRight, 0) + 1);
+                    count++;
 
-                while (tempMap.getOrDefault(subRight,0) > baseMap.getOrDefault(subRight,0)) {
-                    String subLeft = s.substring(left, left + wordLen);
-                    tempMap.put(subLeft, tempMap.get(subLeft) - 1);
-                    count--;
-                    left += wordLen;
+                    while (tempMap.getOrDefault(subRight, 0) > baseMap.getOrDefault(subRight, 0)) {
+                        String subLeft = s.substring(left, left + wordLen);
+                        tempMap.put(subLeft, tempMap.get(subLeft) - 1);
+                        count--;
+                        left += wordLen;
+                    }
+                    if (count == n) {
+                        res.add(left);
+                    }
                 }
-                if (count == n) {
-                    res.add(left);
-                }
+
             }
         }
         return res;
