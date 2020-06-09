@@ -1,22 +1,17 @@
 public class Math069_mySqrt {
     public int mySqrt(int x) {
-        if (x <= 1) return x;
-        long l = 1, r = x / 2;
+        int l = 0, r = x;
+        int ans = -1;
         while (l <= r) {
-            long m = l + (r - l) / 2;
-            long mm = m * m;
-            long m1m1 = (m + 1) * (m + 1);
-            if (mm == x) return (int) m;
-            if (m1m1 == x) return (int) m + 1;
-            if (mm < x && m1m1 > x) return (int) m;
-            if (m1m1 < x) {
+            int m = l + (r - l) / 2;
+            if ((long) m * m <= x) {
+                ans = m;
                 l = m + 1;
-            }
-            if (mm > x) {
+            } else {
                 r = m - 1;
             }
         }
-        return (int) r;
+        return ans;
     }
 
     public static void main(String[] args) {
