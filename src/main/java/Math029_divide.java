@@ -3,7 +3,7 @@ public class Math029_divide {
         if (divisor == 1) return dividend;
         if (dividend == 0) return 0;
         if (dividend == Integer.MIN_VALUE && divisor == -1) return Integer.MAX_VALUE;
-        long a = dividend, b = divisor;
+        long a = dividend, b = divisor; // 必须要转成long,否则会在下面的调用中, 左边的数是min_value的时候会挂
         long ans;
         if (a < 0 && b < 0) {
             ans = div(-a, -b);
