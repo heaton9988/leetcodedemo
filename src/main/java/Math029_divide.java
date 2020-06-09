@@ -3,18 +3,19 @@ public class Math029_divide {
         if (divisor == 1) return dividend;
         if (dividend == 0) return 0;
         if (dividend == Integer.MIN_VALUE && divisor == -1) return Integer.MAX_VALUE;
+        long a = dividend, b = divisor;
         long ans;
-        if (dividend < 0 && divisor < 0) {
-            ans = div(-dividend, -divisor);
-        } else if (dividend > 0 && divisor > 0) {
-            ans = div(dividend, divisor);
+        if (a < 0 && b < 0) {
+            ans = div(-a, -b);
+        } else if (a > 0 && b > 0) {
+            ans = div(a, b);
         } else {
-            ans = -div(Math.abs(dividend), Math.abs(divisor));
+            ans = -div(Math.abs(a), Math.abs(b));
         }
         return (int) ans;
     }
 
-    private long div(int a, int b) {
+    private long div(long a, long b) {
         if (a < b) return 0;
         int i = 0;
         while (a >= (b << i)) {
