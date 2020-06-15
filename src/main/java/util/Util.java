@@ -1,5 +1,9 @@
 package util;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+
 public class Util {
     public static void printArr(int[] arr) {
         StringBuilder sb = new StringBuilder("[");
@@ -99,6 +103,38 @@ public class Util {
         }
         if (sb.length() > 0) sb.setLength(sb.length() - 1);
         System.out.println("[" + sb.toString() + "]");
+    }
+
+    public static TreeMap<Integer, Integer> tree2map(TreeNode node) {
+        TreeMap<Integer, Integer> cache = new TreeMap<>();
+        if (node == null) return cache;
+
+        HashMap<Integer, TreeNode> undoMap = new HashMap<>();
+        undoMap.put(0, node);
+        while (!undoMap.isEmpty()) {
+            Map.Entry<Integer, TreeNode> entry = undoMap.entrySet().iterator().next();
+            Integer key = entry.getKey();
+            TreeNode value = entry.getValue();
+            cache.put(key, value.val);
+            if (value.left != null) {
+                undoMap.put(key * 2 + 1, value.left);
+            }
+            if (value.right != null) {
+                undoMap.put(key * 2 + 2, value.right);
+            }
+            undoMap.remove(key);
+        }
+        return cache;
+    }
+
+    public static Integer[] tree2arr(TreeNode node) {
+        TreeMap<Integer, Integer> cache = tree2map(node);
+        int maxKey = cache.lastKey();
+        Integer[] res = new Integer[maxKey + 1];
+        for (Map.Entry<Integer, Integer> entry : cache.entrySet()) {
+            res[entry.getKey()] = entry.getValue();
+        }
+        return res;
     }
 
     public static void swap(int[] nums, int i, int j) {
