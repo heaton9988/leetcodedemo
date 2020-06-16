@@ -4,20 +4,14 @@ import util.Util;
 import java.util.LinkedList;
 
 public class Tree104_maxDepth {
-    int max = 0;
-
     public int maxDepth(TreeNode root) {
         if (root == null) return 0;
-        dfs(root, 0);
-        return max;
+        return dfs(root, 0);
     }
 
-    private void dfs(TreeNode node, int lastDepth) {
-        if (node == null) return;
-        lastDepth++;
-        if (lastDepth > max) max = lastDepth;
-        dfs(node.left, lastDepth);
-        dfs(node.right, lastDepth);
+    private int dfs(TreeNode node, int lastDepth) {
+        if (node == null) return lastDepth;
+        return Math.max(dfs(node.left, lastDepth + 1), dfs(node.right, lastDepth + 1));
     }
 
     public static void main(String[] args) {
