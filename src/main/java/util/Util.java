@@ -41,7 +41,7 @@ public class Util {
         }
     }
 
-    public static TreeNode arr2tree(Integer[] arr) {
+    public static TreeNode arr2tree(Integer... arr) {
         TreeNode[] nodeArr = new TreeNode[arr.length];
         for (int i = 0; i < arr.length; i++) {
             if (arr[i] == null)
@@ -69,7 +69,7 @@ public class Util {
         return dummy.next;
     }
 
-    public static ListNode arr2listNode(int[] arr) {
+    public static ListNode arr2listNode(int... arr) {
         ListNode dummy = new ListNode(-1);
         ListNode curr = dummy;
         for (int i = 0; i < arr.length; i++) {
