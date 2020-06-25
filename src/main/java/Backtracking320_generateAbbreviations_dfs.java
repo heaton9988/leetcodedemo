@@ -13,25 +13,24 @@ public class Backtracking320_generateAbbreviations_dfs {
             res.add("");
             return res;
         }
-        helper(1, 0, "" + cs[0]);
-        helper(1, 1, "");
+        helper(0, 0, new StringBuilder());
         return res;
     }
 
-    private void helper(int index, int count, String sb) {
+    private void helper(int index, int count, StringBuilder sb) {
+        int sbLen = sb.length();
         if (index == len) {
-            if (count > 0) {
-                res.add(sb + count);
-            } else {
-                res.add(sb);
-            }
-            return;
+            if (count > 0) sb.append(count);
+            res.add(sb.toString());
+        } else {
+            helper(index + 1, count + 1, sb);
+
+            if (count > 0) sb.append(count);
+            sb.append(cs[index]);
+            helper(index + 1, 0, sb);
         }
-        helper(index + 1, count + 1, sb);
-
-        helper(index + 1, 0, count > 0 ? sb + count + cs[index] : sb + cs[index]);
+        sb.setLength(sbLen);
     }
-
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
