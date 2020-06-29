@@ -41,7 +41,7 @@ public class Backtracking017_letterCombinations {
         for (int j = 0; j < css[startI].length; j++) {
             sb.append(css[startI][j]);
             dfs(startI + 1, sb);
-            sb.setLength(sb.length() - 1);
+            sb.deleteCharAt(sb.length() - 1);
         }
     }
 

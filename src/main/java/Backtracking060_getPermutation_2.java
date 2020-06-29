@@ -33,7 +33,7 @@ public class Backtracking060_getPermutation_2 {
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
-        Object o = new Backtracking060_getPermutation_2().getPermutation(4, 1);
+        Object o = new Backtracking060_getPermutation_2().getPermutation(4, 9);
         System.out.println(System.currentTimeMillis() - start + " ms");
         System.out.println(o);
     }

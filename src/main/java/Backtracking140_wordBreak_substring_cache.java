@@ -1,41 +1,45 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class Backtracking140_wordBreak_substring_cache {
     HashSet<String> set;
     String s;
-    List<String> res = new ArrayList<>();
     int len;
+    HashMap<Integer, List<String>> map = new HashMap<>();
 
     public List<String> wordBreak(String s, List<String> wordDict) {
         this.s = s;
         len = s.length();
         set = new HashSet<>(wordDict);
-        helper(0, new ArrayList<>());
-        return res;
+        return wordBreak(0);
     }
 
-    private void helper(int start, List<String> list) {
+    private List<String> wordBreak(int start) {
+        if (map.containsKey(start)) return map.get(start);
         if (start == len) {
-            res.add(String.join(" ", list));
-            return;
+            return null;
         }
-        for (int i = start + 1; i <= len; i++) {
-            String sub = s.substring(start, i);
+        LinkedList<String> ret = new LinkedList<>();
+        for (int end = start + 1; end <= len; end++) {
+            String sub = s.substring(start, end);
             if (set.contains(sub)) {
-                list.add(sub);
-                helper(i, list);
-                list.remove(list.size() - 1);
+                List<String> nextWords = wordBreak(end);
+                if (nextWords != null) {
+                    for (String nextWord : nextWords) {
+                        ret.add(sub + " " + nextWord);
+                    }
+                } else {
+                    ret.add(sub);
+                }
             }
         }
+        map.put(start, ret);
+        return ret;
     }
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
         Object o = new Backtracking140_wordBreak_substring_cache().wordBreak("pineapplepenapple", Arrays.asList("apple", "pen", "applepen", "pine", "pineapple"));
-//        Object o = new Backtracking140_wordBreak().wordBreak("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+//        Object o = new Backtracking140_wordBreak_substring_cache().wordBreak("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 //                , Arrays.asList("a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa"));
         System.out.println(System.currentTimeMillis() - start + " ms");
         System.out.println(o);
