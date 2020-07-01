@@ -5,23 +5,15 @@ public class DP120_minimumTotal {
     public int minimumTotal(List<List<Integer>> triangle) {
         int height = triangle.size();
         int width = triangle.get(height - 1).size();
-        int[][] dp = new int[2][width];
-        int toggle = 0;
-        int i = 0;
-        for (int num : triangle.get(height - 1)) {
-            dp[toggle % 2][i++] = num;
-        }
-        for (i = height - 2; i >= 0; i--) {
-            int[] dpLast = dp[toggle % 2];
-            toggle++;
-            int[] dpCurr = dp[toggle % 2];
+        int[] dp = new int[width + 1];
+        for (int i = height - 1; i >= 0; i--) {
             List<Integer> currList = triangle.get(i);
 
             for (int j = 0; j < currList.size(); j++) {
-                dpCurr[j] = Math.min(dpLast[j], dpLast[j + 1]) + currList.get(j);
+                dp[j] = Math.min(dp[j], dp[j + 1]) + currList.get(j);
             }
         }
-        return dp[toggle % 2][0];
+        return dp[0];
     }
 
     public static void main(String[] args) {
