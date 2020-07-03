@@ -1,31 +1,22 @@
-import java.util.HashSet;
-
 public class DP322_coinChange {
-    HashSet<Integer> set = new HashSet<>();
     int[] dp;
+    int[] coins;
 
     public int coinChange(int[] coins, int amount) {
-        for (int coin : coins) set.add(coin);
+        this.coins = coins;
         dp = new int[amount + 1];
-        for (int target = 1; target <= amount; target++) {
-            helper(target);
-        }
-        return dp[amount];
+        return helper(amount);
     }
 
     private int helper(int target) {
+        if (target < 0) return -1;
+        if (target == 0) return 0;
         if (dp[target] != 0) return dp[target];
-        if (set.contains(target)) {
-            dp[target] = 1;
-            return dp[target];
-        }
         int min = Integer.MAX_VALUE;
-        for (int coin : set) {
-            if (target > coin) {
-                int res = helper(target - coin);
-                if (res > 0) {
-                    min = Math.min(min, 1 + res);
-                }
+        for (int coin : coins) {
+            int res = helper(target - coin);
+            if (res >= 0 && res < min) {
+                min = 1 + res;
             }
         }
         dp[target] = min == Integer.MAX_VALUE ? -1 : min;
