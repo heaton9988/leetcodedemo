@@ -69,6 +69,22 @@ public class Util {
         return dummy.next;
     }
 
+    public static ListNode buildCycliclistNode(Integer[] arr, int leftIndex, int rightIndex) {
+        ListNode dummy = new ListNode(-1);
+        ListNode curr = dummy;
+        ListNode left = null;
+        ListNode right = null;
+        for (int i = 0; i < arr.length; i++) {
+            ListNode n = new ListNode(arr[i]);
+            curr.next = n;
+            curr = curr.next;
+            if (i == leftIndex) left = n;
+            if (i == rightIndex) right = n;
+        }
+        right.next = left;
+        return dummy.next;
+    }
+
     public static ListNode arr2listNode(int... arr) {
         ListNode dummy = new ListNode(-1);
         ListNode curr = dummy;
