@@ -1,4 +1,4 @@
-public class Search33 {
+public class Array033_search {
     public int search(int[] nums, int target) {
         int n = nums.length;
         int left = 0, right = n - 1;
@@ -33,7 +33,7 @@ public class Search33 {
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
-        Search33 obj = new Search33();
+        Array033_search obj = new Array033_search();
 //        System.out.println(obj.search(new int[]{4, 5, 6, 7, 0, 1, 2}, 0));
         System.out.println(obj.search(new int[]{1, 3}, 2));
 

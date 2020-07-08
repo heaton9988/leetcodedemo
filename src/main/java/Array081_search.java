@@ -1,4 +1,4 @@
-public class Search81 {
+public class Array081_search {
     public boolean search(int[] nums, int target) {
         int n = nums.length;
         int left = 0, right = n - 1;
@@ -41,7 +41,7 @@ public class Search81 {
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
-        Search81 obj = new Search81();
+        Array081_search obj = new Array081_search();
 //        System.out.println(obj.search(new int[]{4, 5, 6, 7, 0, 1, 2}, 0));
 //        System.out.println(obj.search(new int[]{1, 1, 3, 1}, 3));
         System.out.println(obj.search(new int[]{3, 1, 1}, 3));

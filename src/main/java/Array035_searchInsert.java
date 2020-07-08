@@ -1,4 +1,4 @@
-public class SearchInsert35 {
+public class Array035_searchInsert {
     public int searchInsert(int[] nums, int target) {
         int n = nums.length;
         int left = 0, right = n - 1;
@@ -18,7 +18,7 @@ public class SearchInsert35 {
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
-        SearchInsert35 obj = new SearchInsert35();
+        Array035_searchInsert obj = new Array035_searchInsert();
         System.out.println(obj.searchInsert(new int[]{1, 3, 5, 6}, 2));
 
         System.out.println(System.currentTimeMillis() - start + " ms");
