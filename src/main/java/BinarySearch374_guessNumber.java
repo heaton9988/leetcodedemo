@@ -1,4 +1,4 @@
-public class GuessNumber374 {
+public class BinarySearch374_guessNumber {
     public int guessNumber(int n) {
         int l = 1, r = n;
         while (l <= n) {
@@ -24,7 +24,7 @@ public class GuessNumber374 {
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
-        GuessNumber374 obj = new GuessNumber374();
+        BinarySearch374_guessNumber obj = new BinarySearch374_guessNumber();
         System.out.println(obj.guessNumber(10));
 
         System.out.println(System.currentTimeMillis() - start + " ms");

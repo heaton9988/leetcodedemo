@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Intersect350 {
+public class BinarySearch350_intersect {
     public int[] intersect(int[] nums1, int[] nums2) {
         ArrayList<Integer> res = new ArrayList<>();
         Arrays.sort(nums1);
@@ -27,7 +27,7 @@ public class Intersect350 {
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
-        Intersect350 obj = new Intersect350();
+        BinarySearch350_intersect obj = new BinarySearch350_intersect();
         System.out.println(obj.intersect(new int[]{4, 9, 5}, new int[]{9, 4, 9, 8, 4}));
 
         System.out.println(System.currentTimeMillis() - start + " ms");

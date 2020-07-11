@@ -1,4 +1,4 @@
-public class FindPeakElement162 {
+public class BinarySearch162_findPeakElement {
     public int findPeakElement(int[] nums) {
         int n = nums.length;
         int l = 0, r = n - 1;
@@ -27,7 +27,7 @@ public class FindPeakElement162 {
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
-        FindPeakElement162 obj = new FindPeakElement162();
+        BinarySearch162_findPeakElement obj = new BinarySearch162_findPeakElement();
         System.out.println(obj.findPeakElement(new int[]{1, 2, 3, 1}));
 
         System.out.println(System.currentTimeMillis() - start + " ms");

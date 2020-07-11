@@ -1,4 +1,4 @@
-public class Array154_findMin {
+public class BinarySearch154_findMin {
     public int findMin(int[] nums) {
         int n = nums.length;
         int l = 0, r = n - 1;
@@ -33,7 +33,7 @@ public class Array154_findMin {
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
-        Array154_findMin obj = new Array154_findMin();
+        BinarySearch154_findMin obj = new BinarySearch154_findMin();
         System.out.println(obj.findMin(new int[]{2, 2, 2}));
 
         System.out.println(System.currentTimeMillis() - start + " ms");

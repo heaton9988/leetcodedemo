@@ -1,4 +1,4 @@
-public class SearchRange34 {
+public class BinarySearch034_searchRange {
     public int[] searchRange(int[] nums, int target) {
         int n = nums.length;
         int l = 0, r = n - 1;
@@ -38,7 +38,7 @@ public class SearchRange34 {
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
-        SearchRange34 obj = new SearchRange34();
+        BinarySearch034_searchRange obj = new BinarySearch034_searchRange();
         System.out.println(obj.searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8));
 
         System.out.println(System.currentTimeMillis() - start + " ms");

@@ -1,28 +1,20 @@
-public class Array081_search {
-    public boolean search(int[] nums, int target) {
+public class BinarySearch033_search {
+    public int search(int[] nums, int target) {
         int n = nums.length;
         int left = 0, right = n - 1;
-        outer:
         while (left <= right) {
             int mid = left + (right - left) / 2;
             if (nums[mid] == target) {
-                return true;
+                return mid;
             } else if (nums[right] == target) {
-                return true;
+                return right;
             } else if (mid == left) {
-                return false;
+                return -1;
             }
 
-            while (nums[mid] == nums[right]) {
-                right--;
-                continue outer;
-            }
-            while (nums[mid] == nums[left]) {
-                left++;
-                continue outer;
-            }
+            if (nums[mid] == nums[left]) {
 
-            if (nums[mid] > nums[left]) {
+            } else if (nums[mid] > nums[left]) {
                 if (target <= nums[mid] && target >= nums[left]) {
                     right = mid;
                 } else {
@@ -36,15 +28,14 @@ public class Array081_search {
                 }
             }
         }
-        return false;
+        return -1;
     }
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
-        Array081_search obj = new Array081_search();
+        BinarySearch033_search obj = new BinarySearch033_search();
 //        System.out.println(obj.search(new int[]{4, 5, 6, 7, 0, 1, 2}, 0));
-//        System.out.println(obj.search(new int[]{1, 1, 3, 1}, 3));
-        System.out.println(obj.search(new int[]{3, 1, 1}, 3));
+        System.out.println(obj.search(new int[]{1, 3}, 2));
 
         System.out.println(System.currentTimeMillis() - start + " ms");
     }
