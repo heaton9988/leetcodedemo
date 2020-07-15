@@ -110,6 +110,20 @@ public class Util {
         return grid;
     }
 
+    public static char[][] str2charMatrix(String s) {
+        String[] ss = s.split(",");
+        char[][] grid = new char[ss.length][];
+
+        for (int i = 0; i < ss.length; i++) {
+            char[] temp = new char[ss[i].length()];
+            for (int j = 0; j < temp.length; j++) {
+                temp[j] = ss[i].charAt(j) ;
+            }
+            grid[i] = temp;
+        }
+        return grid;
+    }
+
     public static void printListNode(Object o) {
         ListNode node = (ListNode) o;
         StringBuilder sb = new StringBuilder();
