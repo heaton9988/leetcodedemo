@@ -11,19 +11,14 @@ public class DfsBfs286_wallsAndGates {
         if (rows == 0) return;
         cols = rooms[0].length;
 
+        LinkedList<int[]> queue = new LinkedList<>();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (rooms[i][j] == 0) {
-                    bfs(i, j, new boolean[rows][cols]);
+                    queue.addLast(new int[]{i, j});
                 }
             }
         }
-    }
-
-    private void bfs(int i, int j, boolean[][] visited) {
-        LinkedList<int[]> queue = new LinkedList<>();
-        queue.addLast(new int[]{i, j});
-        visited[i][j] = true;
         int step = 0;
         while (!queue.isEmpty()) {
             int size = queue.size();
@@ -33,13 +28,11 @@ public class DfsBfs286_wallsAndGates {
                 int x = point[0], y = point[1];
                 for (int[] direct : directions) {
                     int nextX = x + direct[0], nextY = y + direct[1];
-                    if (nextX < 0 || nextY < 0 || nextX >= rows || nextY >= cols
-                            || rooms[nextX][nextY] == 0 || rooms[nextX][nextY] == -1 || visited[nextX][nextY]) {
+                    if (nextX < 0 || nextY < 0 || nextX >= rows || nextY >= cols || rooms[nextX][nextY] < Integer.MAX_VALUE) {
                         continue;
                     }
-                    rooms[nextX][nextY] = Math.min(rooms[nextX][nextY], step);
+                    rooms[nextX][nextY] = step;
                     queue.addLast(new int[]{nextX, nextY});
-                    visited[nextX][nextY] = true;
                 }
             }
         }
