@@ -1,130 +1,108 @@
 import java.util.*;
 
 public class DfsBfs126_findLadders {
-    List<List<String>> res = new ArrayList<>();
-    Map<String, HashSet<String>> pattern2strs = new HashMap<>();
-    HashMap<String, List<String>> leftEndWord2list = new HashMap<>();
-    HashMap<String, List<String>> rightEndWord2list = new HashMap<>();
-    Integer minSize = null;
-
     public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
-        HashSet<String> dict = new HashSet<>();
-        for (String word : wordList) {
-            dict.add(word);
-            for (String pattern : getPatterns(word)) {
-                HashSet<String> strings = pattern2strs.get(pattern);
-                if (strings == null) {
-                    strings = new HashSet<>();
-                    pattern2strs.put(pattern, strings);
-                }
-                strings.add(word);
-            }
+        List<List<String>> ans = new ArrayList<>();
+        if (!wordList.contains(endWord)) {
+            return ans;
         }
-        if (!dict.contains(endWord)) {
-            return res;
+        // 利用 BFS 得到所有的邻居节点
+        HashMap<String, ArrayList<String>> map = new HashMap<>();
+        bfs(beginWord, endWord, wordList, map);
+        ArrayList<String> temp = new ArrayList<String>();
+        // temp 用来保存当前的路径
+        temp.add(beginWord);
+        findLaddersHelper(beginWord, endWord, map, temp, ans);
+        return ans;
+    }
+
+    private void findLaddersHelper(String beginWord, String endWord, HashMap<String, ArrayList<String>> map,
+                                   ArrayList<String> temp, List<List<String>> ans) {
+        if (beginWord.equals(endWord)) {
+            ans.add(new ArrayList<String>(temp));
+            return;
         }
+        // 得到所有的下一个的节点
+        ArrayList<String> neighbors = map.getOrDefault(beginWord, new ArrayList<String>());
+        for (String neighbor : neighbors) {
+            temp.add(neighbor);
+            findLaddersHelper(neighbor, endWord, map, temp, ans);
+            temp.remove(temp.size() - 1);
+        }
+    }
 
-        HashSet<String> visitedLeft = new HashSet<>();
-        LinkedList<String> leftQ = new LinkedList<>();
-        leftQ.add(beginWord);
-        visitedLeft.add(beginWord);
-        leftEndWord2list.put(beginWord, Arrays.asList(beginWord));
+    //利用递归实现了双向搜索
+    private void bfs(String beginWord, String endWord, List<String> wordList, HashMap<String, ArrayList<String>> map) {
+        Set<String> set1 = new HashSet<String>();
+        set1.add(beginWord);
+        Set<String> set2 = new HashSet<String>();
+        set2.add(endWord);
+        Set<String> wordSet = new HashSet<String>(wordList);
+        bfsHelper(set1, set2, wordSet, true, map);
+    }
 
-        HashSet<String> visitedRight = new HashSet<>();
-        LinkedList<String> rightQ = new LinkedList<>();
-        rightQ.add(endWord);
-        visitedRight.add(endWord);
-        rightEndWord2list.put(endWord, Arrays.asList(endWord));
+    // direction 为 true 代表向下扩展，false 代表向上扩展
+    private boolean bfsHelper(Set<String> set1, Set<String> set2, Set<String> wordSet, boolean direction,
+                              HashMap<String, ArrayList<String>> map) {
+        //set1 为空了，就直接结束
+        //比如下边的例子就会造成 set1 为空
+    /*	"hot"
+		"dog"
+		["hot","dog"]*/
+        if (set1.isEmpty()) {
+            return false;
+        }
+        // set1 的数量多，就反向扩展
+        if (set1.size() > set2.size()) {
+            return bfsHelper(set2, set1, wordSet, !direction, map);
+        }
+        // 将已经访问过单词删除
+        wordSet.removeAll(set1);
+        wordSet.removeAll(set2);
 
-        boolean hasFind = false;
-        outer:
-        while (!leftQ.isEmpty() || !rightQ.isEmpty()) {
-            int sizeLeft = leftQ.size();
-            for (int i = 0; i < sizeLeft; i++) {
-                String strLeft = leftQ.poll();
-                List<String> list = leftEndWord2list.get(strLeft);
-                for (String nextWord : getNextWords(strLeft)) {
-                    if (visitedRight.contains(nextWord)) {
-                        List<String> temp = new ArrayList<>();
-                        temp.addAll(rightEndWord2list.get(nextWord));
-                        List<String> leftList = leftEndWord2list.get(strLeft);
-                        for (int k = leftList.size() - 1; k >= 0; k--) {
-                            temp.add(leftList.get(k));
-                        }
-                        if (minSize == null || minSize == temp.size()) {
-                            Collections.reverse(temp);
-                            res.add(temp);
-                            minSize = temp.size();
-                            hasFind = true;
-                        } else {
-                            break outer;
-                        }
-                    } else if (!visitedLeft.contains(nextWord)) {
-                        visitedLeft.add(nextWord);
-                        leftQ.addLast(nextWord);
-                        ArrayList<String> newList = new ArrayList<>(list);
-                        newList.add(nextWord);
-                        leftEndWord2list.put(nextWord, newList);
+        boolean done = false;
+
+        // 保存新扩展得到的节点
+        Set<String> set = new HashSet<String>();
+
+        for (String str : set1) {
+            //遍历每一位
+            for (int i = 0; i < str.length(); i++) {
+                char[] chars = str.toCharArray();
+
+                // 尝试所有字母
+                for (char ch = 'a'; ch <= 'z'; ch++) {
+                    if (chars[i] == ch) {
+                        continue;
+                    }
+                    chars[i] = ch;
+
+                    String word = new String(chars);
+
+                    // 根据方向得到 map 的 key 和 val
+                    String key = direction ? str : word;
+                    String val = direction ? word : str;
+
+                    ArrayList<String> list = map.containsKey(key) ? map.get(key) : new ArrayList<String>();
+
+                    //如果相遇了就保存结果
+                    if (set2.contains(word)) {
+                        done = true;
+                        list.add(val);
+                        map.put(key, list);
+                    }
+
+                    //如果还没有相遇，并且新的单词在 word 中，那么就加到 set 中
+                    if (!done && wordSet.contains(word)) {
+                        set.add(word);
+                        list.add(val);
+                        map.put(key, list);
                     }
                 }
             }
-
-            int sizeRight = rightQ.size();
-            for (int i = 0; i < sizeRight; i++) {
-                String strRight = rightQ.poll();
-                List<String> list = rightEndWord2list.get(strRight);
-                for (String nextWord : getNextWords(strRight)) {
-                    if (visitedLeft.contains(nextWord)) {
-                        List<String> temp = new ArrayList<>();
-                        temp.addAll(leftEndWord2list.get(nextWord));
-                        List<String> rightList = rightEndWord2list.get(strRight);
-                        for (int k = rightList.size() - 1; k >= 0; k--) {
-                            temp.add(rightList.get(k));
-                        }
-                        if (minSize == null || minSize == temp.size()) {
-                            res.add(temp);
-                            minSize = temp.size();
-                            hasFind = true;
-                        } else {
-                            break outer;
-                        }
-                    } else if (!visitedRight.contains(nextWord)) {
-                        visitedRight.add(nextWord);
-                        rightQ.addLast(nextWord);
-                        ArrayList<String> newList = new ArrayList<>(list);
-                        newList.add(nextWord);
-                        rightEndWord2list.put(nextWord, newList);
-                    }
-                }
-            }
-            if (hasFind) break outer;
         }
-        return res;
-    }
-
-    private HashSet<String> getNextWords(String s) {
-        HashSet<String> res = new HashSet<>();
-        for (String pattern : getPatterns(s)) {
-            HashSet<String> strings = pattern2strs.get(pattern);
-            if (strings == null) continue;
-            for (String str : strings) {
-                res.add(str);
-            }
-        }
-        res.remove(s);
-        return res;
-    }
-
-    private List<String> getPatterns(String s) {
-        List<String> res = new ArrayList<>();
-        char[] cs = s.toCharArray();
-        for (int i = 0; i < cs.length; i++) {
-            char temp = cs[i];
-            cs[i] = '*';
-            res.add(new String(cs));
-            cs[i] = temp;
-        }
-        return res;
+        // 一般情况下新扩展的元素会多一些，所以我们下次反方向扩展  set2
+        return done || bfsHelper(set2, set, wordSet, !direction, map);
     }
 
     public static void main(String[] args) {
