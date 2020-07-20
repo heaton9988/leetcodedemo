@@ -12,22 +12,32 @@ public class Stack224_calculate {
         len = cs.length;
         stack = new String[len / 2 + 1];
         ops = new char[len / 2 + 1];
+        StringBuilder sb = new StringBuilder();
         while (index < len) {
             char c = cs[index++];
-            if (c == '-' || c == '+') {
-                ops[sizeOps++] = c;
-            } else if (Character.isDigit(c)) {
-                stack[sizeStack++] = c + "";
-            } else if (c == '(') {
-                stack[sizeStack++] = c + "";
-            } else if (c == ')') {
-                Integer res = 0;
-                while (!stack[sizeStack - 2].equals("(")) {
-                    res += calc(0, Integer.parseInt(stack[--sizeStack]), ops[--sizeOps]);
+            if (Character.isDigit(c)) {
+                sb.append(c);
+                if (index == len) {
+                    stack[sizeStack++] = sb.toString();
                 }
-                res += Integer.parseInt(stack[--sizeStack]);
-                --sizeStack;
-                stack[sizeStack++] = res + "";
+            } else {
+                if (sb.length() > 0) {
+                    stack[sizeStack++] = sb.toString();
+                    sb.setLength(0);
+                }
+                if (c == '-' || c == '+') {
+                    ops[sizeOps++] = c;
+                } else if (c == '(') {
+                    stack[sizeStack++] = c + "";
+                } else if (c == ')') {
+                    Integer res = 0;
+                    while (!stack[sizeStack - 2].equals("(")) {
+                        res += calc(0, Integer.parseInt(stack[--sizeStack]), ops[--sizeOps]);
+                    }
+                    res += Integer.parseInt(stack[--sizeStack]);
+                    --sizeStack;
+                    stack[sizeStack++] = res + "";
+                }
             }
         }
 
@@ -51,10 +61,11 @@ public class Stack224_calculate {
     public static void main(String[] args) {
         Stack224_calculate obj = new Stack224_calculate();
         long start = System.currentTimeMillis();
-        String ex = "9-(4-2+1)";
-        ex = "1+1";
-        ex = "2-1+2";
-        ex = "(1+(4+5+2)-3)+(6+8)";
+        String ex = "19-(4-2+1)";
+//        ex = "1+1";
+//        ex = "2-1+2";
+//        ex = "(1+(4+5+2)-3)+(6+8)";
+        ex = Integer.MAX_VALUE + "";
         Object o = obj.calculate(ex);
         System.out.println(o);
         System.out.println(System.currentTimeMillis() - start + " ms");
