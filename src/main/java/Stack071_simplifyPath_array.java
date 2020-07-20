@@ -4,24 +4,20 @@ public class Stack071_simplifyPath_array {
 
     public String simplifyPath(String path) {
         arr = new String[path.length()];
-        int fromIndex = 0;
-        while (true) {
-            String s = null;
-            if (fromIndex >= path.length()) break;
-            int nextSlash = path.indexOf("/", fromIndex);
-            if (nextSlash == -1) {
-                s = path.substring(fromIndex);
-                process(s);
-                break;
-            } else if (fromIndex == nextSlash) {
-                fromIndex++;
+        char[] cs = path.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        for (char c : cs) {
+            if (c == '/') {
+                if (sb.length() > 0) {
+                    process(sb.toString());
+                    sb.setLength(0);
+                }
             } else {
-                s = path.substring(fromIndex, nextSlash);
-                process(s);
-                fromIndex = nextSlash + 1;
+                sb.append(c);
             }
         }
-        StringBuilder sb = new StringBuilder();
+        if (sb.length() > 0) process(sb.toString());
+        sb = new StringBuilder();
         for (int i = 0; i <= index; i++) {
             sb.append("/").append(arr[i]);
         }
