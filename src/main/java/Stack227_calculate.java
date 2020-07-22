@@ -1,11 +1,10 @@
-import java.util.Stack;
-
 public class Stack227_calculate {
     char[] cs;
     int len;
 
-    Stack<Integer> operand = new Stack<>();
-    Stack<Character> ops = new Stack<>();
+    int[] operand;
+    char[] ops;
+    int sizeOperand = 0, sizeOps = 0;
 
     boolean isOperation(char c) {
         return c == '+' || c == '-' || c == '*' || c == '/';
@@ -32,6 +31,8 @@ public class Stack227_calculate {
     public int calculate(String s) {
         cs = s.trim().toCharArray();
         len = cs.length;
+        operand = new int[len / 2 + 1];
+        ops = new char[len / 2 + 1];
 
         int sum = -1;
         for (int i = 0; i < len; i++) {
@@ -44,46 +45,43 @@ public class Stack227_calculate {
                     sum = sum * 10 + c - '0';
                 }
                 if (i == len - 1 && sum != -1) {
-                    if (!ops.isEmpty()) {
-                        char lastOp = ops.peek();
-                        if (lastOp == '*' || lastOp == '/') {
-                            sum = calc(operand.pop(), sum, ops.pop());
+                    if (sizeOps > 0) {
+                        if (ops[sizeOps - 1] == '*' || ops[sizeOps - 1] == '/') {
+                            sum = calc(operand[--sizeOperand], sum, ops[--sizeOps]);
                         }
                     }
-                    operand.push(sum);
+                    operand[sizeOperand++] = sum;
                 }
             } else {
                 if (sum != -1) {
-                    if (!ops.isEmpty()) {
-                        char lastOp = ops.peek();
-                        if (lastOp == '*' || lastOp == '/') {
-                            sum = calc(operand.pop(), sum, ops.pop());
+                    if (sizeOps > 0) {
+                        if (ops[sizeOps - 1] == '*' || ops[sizeOps - 1] == '/') {
+                            sum = calc(operand[--sizeOperand], sum, ops[--sizeOps]);
                         }
                     }
-                    operand.push(sum);
+                    operand[sizeOperand++] = sum;
                     sum = -1;
                 }
                 if (isOperation(c)) {
                     if (c == '+' || c == '-') {
-                        if (!ops.isEmpty()) {
-                            char lastOp = ops.peek();
-                            if (lastOp == '+' || lastOp == '-') {
-                                int a2 = operand.pop();
-                                int a1 = operand.pop();
-                                operand.push(calc(a1, a2, ops.pop()));
+                        if (sizeOps > 0) {
+                            if (ops[sizeOps - 1] == '+' || ops[sizeOps - 1] == '-') {
+                                int a2 = operand[--sizeOperand];
+                                int a1 = operand[--sizeOperand];
+                                operand[sizeOperand++] = calc(a1, a2, ops[--sizeOps]);
                             }
                         }
                     }
-                    ops.push(c);
+                    ops[sizeOps++] = c;
                 }
             }
         }
         int res = 0;
-        while (!operand.isEmpty()) {
-            if (!ops.isEmpty() && ops.pop() == '-') {
-                res -= operand.pop();
+        while (sizeOperand > 0) {
+            if (sizeOps > 0 && ops[--sizeOps] == '-') {
+                res -= operand[--sizeOperand];
             } else {
-                res += operand.pop();
+                res += operand[--sizeOperand];
             }
         }
         return res;
