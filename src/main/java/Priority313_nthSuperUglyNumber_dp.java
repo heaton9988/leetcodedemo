@@ -14,8 +14,9 @@ public class Priority313_nthSuperUglyNumber_dp {
             int min = Integer.MAX_VALUE;
             /*遍历对比一下值，找出最小的，*/
             for (int j = 0; j < len; j++) {
-                if (min > primes[j] * dp[index[j]]) {
-                    min = primes[j] * dp[index[j]];//这个地方就是当前质因数和他要结合的dp
+                int temp = primes[j] * dp[index[j]];
+                if (min > temp) {
+                    min = temp;//这个地方就是当前质因数和他要结合的dp
                 }
             }
             dp[i] = min;
