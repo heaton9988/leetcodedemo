@@ -4,7 +4,9 @@ public class UnionFind261_validTree {
         if (edges.length != n - 1) return false;
 
         int[] parent = new int[n];
-        for (int i = 0; i < n; i++) parent[i] = i;
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
 
         int component = n;
         for (int[] e : edges) {
@@ -20,7 +22,9 @@ public class UnionFind261_validTree {
     }
 
     private int find(int[] p, int x) {
-        if (p[x] != x) p[x] = find(p, p[x]);
+        if (p[x] != x) {
+            p[x] = find(p, p[x]);
+        }
         return p[x];
     }
 
