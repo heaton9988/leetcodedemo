@@ -17,22 +17,17 @@ public class Trie211_WordDictionary {
         curr.word = true;
     }
 
-    /**
-     * Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter.
-     */
     public boolean search(String word) {
-        return help(root, word);
+        return help(root, 0, word.toCharArray());
     }
 
-    private boolean help(Trie curr, String word) {
-        char[] cs = word.toCharArray();
-        for (int i = 0; i < cs.length; i++) {
+    private boolean help(Trie curr, int index, char[] cs) {
+        for (int i = index; i < cs.length; i++) {
             char c = cs[i];
             if (c == '.') {
-                String subWord = word.substring(i + 1);
                 for (Trie child : curr.child) {
                     if (child != null) {
-                        if (help(child, subWord)) {
+                        if (help(child, i + 1, cs)) {
                             return true;
                         }
                     }
