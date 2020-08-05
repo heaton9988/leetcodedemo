@@ -18,25 +18,19 @@ public class Design251_Vector2D {
 
     public int next() {
         int res = next;
-        if (j >= v[i].length - 1) {
-            if (i >= v.length - 1) {
-                next = null;
-            } else {
-                while (true) {
-                    i++;
-                    if (i == v[i].length) {
-                        next = null;
-                        break;
-                    }
-                    if (v[i].length > 0) break;
-                }
-                j = 0;
+        int a = i, b = j + 1;
+        outer:
+        for (; a < v.length; a++) {
+            for (; b < v[a].length; b++) {
+                next = v[a][b];
+                this.i = a;
+                this.j = b;
+                break outer;
             }
-        } else {
-            j++;
+            b=0;
         }
-        if (next != null) {
-            next = v[i][j];
+        if (a >= v.length) {
+            next = null;
         }
         return res;
     }
