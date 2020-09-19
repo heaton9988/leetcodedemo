@@ -1,8 +1,8 @@
 import java.util.*;
 
 /**
- * Your LRUCache object will be instantiated and called as such:
- * LRUCache obj = new LRUCache(capacity);
+ * Your toutiao.LRUCache object will be instantiated and called as such:
+ * toutiao.LRUCache obj = new toutiao.LRUCache(capacity);
  * int param_1 = obj.get(key);
  * obj.put(key,value);
  */

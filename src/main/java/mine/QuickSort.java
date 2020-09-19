@@ -4,7 +4,7 @@ import util.Util;
 
 public class QuickSort {
     private void quickSort(int[] arr, int start, int end) {
-        if (start <= end) {
+        if (start < end) {
             int pivotIndex = partition(arr, start, end);
             quickSort(arr, start, pivotIndex - 1);
             quickSort(arr, pivotIndex + 1, end);

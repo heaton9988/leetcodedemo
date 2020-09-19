@@ -7,14 +7,20 @@ public class SearchInRotatedSortedArray033_2 {
     private int bSearch(int[] nums, int left, int right, int target) {
         if (left > right) return -1;
         int mid = left + (right - left) / 2;
-        if (nums[mid] == target) return mid;
-        if (nums[mid] < nums[right]) {
-            if (nums[mid] < target && target <= nums[right]) return bSearch(nums, mid + 1, right, target);
-            else return bSearch(nums, left, mid - 1, target);
-        }
-        if (nums[mid] >= nums[left]) {
-            if (nums[mid] > target && target >= nums[left]) return bSearch(nums, left, mid - 1, target);
-            else return bSearch(nums, mid + 1, right, target);
+        if (nums[mid] == target) {
+            return mid;
+        } else if (nums[mid] < nums[right]) { // 右半边正常
+            if (target > nums[mid] && target <= nums[right]) { // 大于right的数字, 有可能存在, 在左边
+                return bSearch(nums, mid + 1, right, target);
+            } else {
+                return bSearch(nums, left, mid - 1, target);
+            }
+        } else if (nums[mid] >= nums[left]) { // 右半边不正常 &&
+            if (target < nums[mid] && target >= nums[left]) {
+                return bSearch(nums, left, mid - 1, target);
+            } else {
+                return bSearch(nums, mid + 1, right, target);
+            }
         }
         return -1;
     }

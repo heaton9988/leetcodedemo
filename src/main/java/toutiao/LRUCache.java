@@ -1,48 +1,46 @@
+package toutiao;
+
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Your LRUCache object will be instantiated and called as such:
- * LRUCache obj = new LRUCache(capacity);
+ * Your toutiao.LRUCache object will be instantiated and called as such:
+ * toutiao.LRUCache obj = new toutiao.LRUCache(capacity);
  * int param_1 = obj.get(key);
  * obj.put(key,value);
  */
 public class LRUCache {
-    private int capacity;
-    private LinkedHashMap<Integer, Integer> linkedList;
+    LinkedHashMap<Integer,Integer> map;
+    int capacity;
 
     public LRUCache(int capacity) {
+        this.map  = new LinkedHashMap<>();
         this.capacity = capacity;
-        linkedList = new LinkedHashMap<Integer, Integer>();
     }
 
     public int get(int key) {
-        int ret = -1;
-
-        Integer value = linkedList.get(key);
-
-        if (value != null) {
-            ret = value;
-
-            linkedList.remove(key);
-            linkedList.put(key, value);
+        Integer res = map.get(key);
+        if(res == null) {
+            return -1;
+        } else {
+            map.remove(key);
+            map.put(key, res);
+            return res;
         }
-
-        return ret;
     }
 
     public void put(int key, int value) {
-        if (!linkedList.containsKey(key)) {
-            if (linkedList.size() == capacity) {
-                Iterator<Map.Entry<Integer, Integer>> iterator = linkedList.entrySet().iterator();
-                iterator.next();
-                iterator.remove();
-            }
+        if(map.containsKey(key)) {
+            map.remove(key);
+            map.put(key, value);
         } else {
-            linkedList.remove(key);
+            map.put(key, value);
+            if(map.size() > capacity) {
+                Integer oldKey = map.keySet().iterator().next();
+                map.remove(oldKey);
+            }
         }
-        linkedList.put(key, value);
     }
 
     public static void main(String[] args) {
